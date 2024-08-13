@@ -180,10 +180,12 @@ export const refresh = (req, res) => {
 
 export const getUsersAlphabetically = async (req, res) => {
   try {
-    const users = await UserModel.find().sort({ name: 1 }); // Ordenar alfabéticamente por nombre (1 para ascendente)
-    res.status(200).json({users:users});
+    const users = await UserModel.findAll({
+      order: [['user', 'ASC']] // Ordenar alfabéticamente por nombre (ASC para ascendente)
+    });
+    res.status(200).json({ users: users });
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los usuarios', error });
+    res.status(500).json({ message: 'Error al obtener los usuarios', error: error });
   }
 };
 
